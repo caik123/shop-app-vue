@@ -1,0 +1,1 @@
+<view class="contact"><image src="http://www.itcast.cn/2018czydz/images/gywmban.jpg"></image><view class="txt"><view data-event-opts="{{[['tap',[['callphone',['$event']]]]]}}" bindtap="__e">联系电话：027-87179095（点击拨打）</view><view>地址：湖北省武汉市东湖新技术开发区光谷软件园C3栋8层</view></view><map longitude="{{longitude}}" latitude="{{latitude}}" markers="{{markers}}"></map></view>
