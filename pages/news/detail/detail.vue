@@ -44,7 +44,7 @@
 		.title {
 			text-align: center;
 			margin-top: 20rpx;
-			font-size: 30rpx;
+			font-size: 34rpx;
 		}
 
 		.info {
@@ -56,6 +56,7 @@
 		.content{
 			margin-top: 30rpx;
 			padding-bottom: 30rpx;
+			font-size: 28rpx;
 		}
 	}
 </style>
