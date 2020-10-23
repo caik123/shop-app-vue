@@ -51,7 +51,7 @@
 				}, {
 					icon: 'cart',
 					text: '购物车',
-					info: 2
+					info: 0
 				}],
 				buttonGroup: [{
 						text: '加入购物车',
@@ -98,14 +98,48 @@
 			},
 			//客服等点击事件
 			onClick(e) {
-				uni.showToast({
-					title: `点击${e.content.text}`,
-					icon: 'none'
-				})
+				console.log(e);
+				if (e.index === 0) {
+					uni.showToast({
+						title: "点击了客服"
+					})
+				} else if (e.index === 1) {
+					uni.showToast({
+						title: "点击了店铺"
+					})
+				} else {
+					uni.switchTab({
+						url: '../../cart/cart'
+					})
+				}
 			},
 			//加入购物车等点击事件
 			buttonClick(e) {
-				console.log(e)
+
+				const cartGoods = uni.getStorageSync('cartGoods') || []
+				const cartGood = {}
+				if (cartGoods.length > 0) {
+					cartGoods.forEach((item, index) => {
+						if (item.id.toString() === this.id) {
+							item.num++
+							cartGoods[index] = item
+							uni.removeStorageSync('cartGoods')
+							uni.setStorageSync('cartGoods', cartGoods)
+							return
+						}
+					})
+				} else {
+					cartGood.id = this.id - 0
+					cartGood.shopName = '网易优选旗舰店'
+					cartGood.title = this.goodsinfo.title
+					cartGood.img_url = this.goodsswipers[0].src
+					cartGood.price = this.goodsinfo.sell_price
+					cartGood.num = 1
+					cartGood.check = false
+
+					cartGoods.push(cartGood)
+					uni.setStorageSync('cartGoods', cartGoods)
+				}
 				this.options[2].info++
 			}
 		}
