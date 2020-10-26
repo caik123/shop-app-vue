@@ -7,8 +7,8 @@
 					<text>{{item.shopName}}</text>
 				</view>
 			</view>
-			<view class="item-center">
-				<checkbox-group @change="checkboxItemChange($event,item.id+'')">
+			<view class="item-center" @click="goGoodsDetail(item.id)">
+				<checkbox-group @change="checkboxItemChange($event,item.id)">
 					<checkbox :value="item.id+''" :checked="item.check" style="transform:scale(0.7)" />
 				</checkbox-group>
 				<image :src="item.img_url"></image>
@@ -18,7 +18,7 @@
 			</view>
 			<view class="item-bottom">
 				<text>￥{{item.price}}</text>
-				<uni-number-box :min="1" :max="9999" @change="bindChange($event,item.id+'')"></uni-number-box>
+				<uni-number-box :min="1" :max="9999" :value='item.num' @change="bindChange($event,item.id+'')"></uni-number-box>
 			</view>
 		</view>
 		<view class="total-price">
@@ -50,8 +50,13 @@
 		},
 		onLoad() {
 			let cartGoods = uni.getStorageSync('cartGoods')
-			console.log(cartGoods);
 			this.cartData = cartGoods
+			//监听详情页面添加商品到购物车
+			uni.$on('goods-change', function(){
+				console.log("in goods-change listener");
+				let cartGoods = uni.getStorageSync('cartGoods')
+				this.cartData = cartGoods
+			})
 		},
 		methods: {
 			//改变数量
@@ -103,6 +108,11 @@
 						title: '购买成功'
 					})
 				}
+			},
+			goGoodsDetail(id){
+				uni.navigateTo({
+					url: '../goods/detail/detail?id=' + id
+				})
 			}
 		},
 		//导航栏上自定义按钮的点击事件
